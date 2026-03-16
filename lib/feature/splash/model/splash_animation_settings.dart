@@ -4,7 +4,7 @@ import 'package:enghridoy/core/theme/app_theme.dart';
 
 class SplashAnimationSettings {
   const SplashAnimationSettings({
-    this.loadingDuration = const Duration(milliseconds: 2400),
+    this.loadingDuration = const Duration(milliseconds: 850),
     this.gradientPalettes = const [
       [AppColors.backgroundLight, Color(0xFFF2F3F5)],
     ],

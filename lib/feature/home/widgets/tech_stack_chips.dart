@@ -24,10 +24,16 @@ class TechStackChips extends StatelessWidget {
       iconColor: AppColors.primary,
       label: 'Flutter',
     ),
+    TechChipData(icon: Icons.code, iconColor: Color(0xFF0175C2), label: 'Dart'),
     TechChipData(
-      icon: Icons.code,
-      iconColor: Color(0xFF0175C2),
-      label: 'Dart',
+      icon: Icons.hub_outlined,
+      iconColor: Color(0xFF0F766E),
+      label: 'REST API',
+    ),
+    TechChipData(
+      icon: Icons.account_tree_outlined,
+      iconColor: Color(0xFF2563EB),
+      label: 'Riverpod',
     ),
     TechChipData(
       icon: Icons.cloud_circle,
@@ -35,9 +41,9 @@ class TechStackChips extends StatelessWidget {
       label: 'Firebase',
     ),
     TechChipData(
-      icon: Icons.data_object,
-      iconColor: AppColors.textPrimary,
-      label: 'Bloc',
+      icon: Icons.auto_awesome,
+      iconColor: Color(0xFFEA580C),
+      label: 'AI Features',
     ),
   ];
 
@@ -46,11 +52,7 @@ class TechStackChips extends StatelessWidget {
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: _chips
-          .map((chip) => _TechChip(
-                data: chip,
-              ))
-          .toList(),
+      children: _chips.map((chip) => _TechChip(data: chip)).toList(),
     );
   }
 }

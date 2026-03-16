@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,62 +34,59 @@ class ContactSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12),
-        ),
-        border: Border.all(color: AppColors.borderLight),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 20,
-            offset: const Offset(0, 12),
-          ),
-        ],
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 56),
+      decoration: const BoxDecoration(
+        color: AppColors.backgroundDark,
+        border: Border(top: BorderSide(color: Color(0xFF24313C))),
       ),
-      child: ResponsiveBuilder(
-        builder: (context, sizingInfo) {
-          final isDesktop = sizingInfo.isDesktop;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (isDesktop)
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Expanded(
-                      child: _ContactInfo(
-                        infoItems: _infoItems,
-                        socialLinks: _socialLinks,
-                      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1400),
+          child: ResponsiveBuilder(
+            builder: (context, sizingInfo) {
+              final isDesktop = sizingInfo.isDesktop;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (isDesktop)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Expanded(
+                          child: _ContactInfo(
+                            infoItems: _infoItems,
+                            socialLinks: _socialLinks,
+                          ),
+                        ),
+                        SizedBox(width: 40),
+                        Expanded(child: _ContactFormCard()),
+                      ],
+                    )
+                  else
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        _ContactInfo(
+                          infoItems: _infoItems,
+                          socialLinks: _socialLinks,
+                        ),
+                        SizedBox(height: 28),
+                        _ContactFormCard(),
+                      ],
                     ),
-                    SizedBox(width: 32),
-                    Expanded(child: _ContactFormCard()),
-                  ],
-                )
-              else
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    _ContactInfo(
-                      infoItems: _infoItems,
-                      socialLinks: _socialLinks,
-                    ),
-                    SizedBox(height: 24),
-                    _ContactFormCard(),
-                  ],
-                ),
-              const SizedBox(height: 32),
-              const Divider(color: AppColors.borderLight, height: 1),
-              const SizedBox(height: 16),
-              const _ContactFooter(),
-            ],
-          );
-        },
+                  const SizedBox(height: 32),
+                  Divider(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    height: 1,
+                  ),
+                  const SizedBox(height: 18),
+                  const _ContactFooter(),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -143,28 +139,22 @@ class _ContactInfo extends StatelessWidget {
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
         const Text(
           'Have an idea for a mobile app? I am currently available for '
           'freelance work and open to new opportunities.',
-          style: TextStyle(
-            fontSize: 15,
-            height: 1.6,
-            color: AppColors.textMuted,
-          ),
+          style: TextStyle(fontSize: 15, height: 1.6, color: Color(0xFFB7C4D1)),
         ),
         const SizedBox(height: 24),
-        ...infoItems
-            .map(
-              (item) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: _ContactInfoRow(item: item),
-              ),
-            )
-            .toList(),
+        ...infoItems.map(
+          (item) => Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: _ContactInfoRow(item: item),
+          ),
+        ),
         const SizedBox(height: 12),
         const Text(
           'SOCIALS',
@@ -172,7 +162,7 @@ class _ContactInfo extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.w700,
             letterSpacing: 2,
-            color: AppColors.textMuted,
+            color: Color(0xFF8FA2B4),
           ),
         ),
         const SizedBox(height: 10),
@@ -185,7 +175,7 @@ class _ContactInfo extends StatelessWidget {
                   url: link.url,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: Colors.white,
                   hoverColor: AppColors.primary,
                 ),
               )
@@ -209,7 +199,7 @@ class _ContactInfoRow extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withValues(alpha: 0.14),
             shape: BoxShape.circle,
           ),
           child: Icon(item.icon, color: AppColors.primary, size: 20),
@@ -223,7 +213,7 @@ class _ContactInfoRow extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textMuted,
+                color: Color(0xFF8FA2B4),
               ),
             ),
             const SizedBox(height: 4),
@@ -232,7 +222,7 @@ class _ContactInfoRow extends StatelessWidget {
               url: item.link,
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+              color: Colors.white,
               hoverColor: AppColors.primary,
             ),
           ],
@@ -253,9 +243,9 @@ class _ContactFormCardState extends State<_ContactFormCard> {
   static const String _emailJsEndpoint =
       'https://api.emailjs.com/api/v1.0/email/send';
 
-  final String _emailJsServiceId = dotenv.env['EMAILJS_SERVICE_ID'] ?? '';
-  final String _emailJsTemplateId = dotenv.env['EMAILJS_TEMPLATE_ID'] ?? '';
-  final String _emailJsPublicKey = dotenv.env['EMAILJS_PUBLIC_KEY'] ?? '';
+  final String _emailJsServiceId = _envOrEmpty('EMAILJS_SERVICE_ID');
+  final String _emailJsTemplateId = _envOrEmpty('EMAILJS_TEMPLATE_ID');
+  final String _emailJsPublicKey = _envOrEmpty('EMAILJS_PUBLIC_KEY');
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -263,6 +253,14 @@ class _ContactFormCardState extends State<_ContactFormCard> {
   final TextEditingController _messageController = TextEditingController();
 
   bool _isSending = false;
+
+  static String _envOrEmpty(String key) {
+    try {
+      return dotenv.isInitialized ? dotenv.env[key] ?? '' : '';
+    } catch (_) {
+      return '';
+    }
+  }
 
   bool get _emailJsConfigured =>
       _emailJsServiceId.isNotEmpty &&
@@ -374,12 +372,12 @@ class _ContactFormCardState extends State<_ContactFormCard> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF16212A),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: const Color(0xFF24313C)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.18),
             blurRadius: 20,
             offset: const Offset(0, 12),
           ),
@@ -475,7 +473,7 @@ class _LabeledField extends StatelessWidget {
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.textMuted,
+            color: Color(0xFF9EB0C1),
           ),
         ),
         const SizedBox(height: 6),
@@ -483,22 +481,23 @@ class _LabeledField extends StatelessWidget {
           controller: controller,
           maxLines: maxLines,
           keyboardType: keyboardType,
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(color: Color(0xFFB6C0CC)),
+            hintStyle: const TextStyle(color: Color(0xFF6E8091)),
             filled: true,
-            fillColor: const Color(0xFFF8FAFC),
+            fillColor: const Color(0xFF101922),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 12,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.borderLight),
+              borderSide: const BorderSide(color: Color(0xFF24313C)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.borderLight),
+              borderSide: const BorderSide(color: Color(0xFF24313C)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -524,7 +523,7 @@ class _SendButton extends StatelessWidget {
       builder: (context, isHovered) {
         final Color backgroundColor;
         if (isSending) {
-          backgroundColor = AppColors.primary.withOpacity(0.7);
+          backgroundColor = AppColors.primary.withValues(alpha: 0.7);
         } else {
           backgroundColor = isHovered
               ? AppColors.primaryHover
@@ -542,7 +541,7 @@ class _SendButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.25),
+                  color: AppColors.primary.withValues(alpha: 0.25),
                   blurRadius: 16,
                   offset: const Offset(0, 8),
                 ),
@@ -594,26 +593,26 @@ class _ContactFooter extends StatelessWidget {
         final isMobile = sizingInfo.isMobile;
         final copyright = Text(
           '© 2025 Hridoy Khan. All rights reserved.',
-          style: const TextStyle(fontSize: 12, color: AppColors.textMuted),
+          style: const TextStyle(fontSize: 12, color: Color(0xFF8FA2B4)),
         );
-        final links = Row(
-          mainAxisSize: MainAxisSize.min,
+        final links = Wrap(
+          spacing: 16,
+          runSpacing: 8,
           children: const [
             LinkText(
               label: 'Privacy Policy',
               url: 'https://example.com/privacy',
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: AppColors.textMuted,
+              color: Color(0xFF8FA2B4),
               hoverColor: AppColors.primary,
             ),
-            SizedBox(width: 16),
             LinkText(
               label: 'Terms of Service',
               url: 'https://example.com/terms',
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: AppColors.textMuted,
+              color: Color(0xFF8FA2B4),
               hoverColor: AppColors.primary,
             ),
           ],
@@ -628,7 +627,13 @@ class _ContactFooter extends StatelessWidget {
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [copyright, links],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            copyright,
+            Flexible(
+              child: Align(alignment: Alignment.centerRight, child: links),
+            ),
+          ],
         );
       },
     );

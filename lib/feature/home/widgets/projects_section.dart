@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/hover.dart';
@@ -12,88 +12,80 @@ class ProjectsSection extends StatelessWidget {
   static const List<ProjectItem> _projects = [
     ProjectItem(
       title: 'Billedsmart',
-      subtitle: 'Smart bill negotiation',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'AI-assisted bill negotiation app',
+      techStack: ['Flutter', 'REST API', 'Authentication', 'AI Workflow'],
       tag: 'Billing',
       imageUrl:
-          'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=600&q=80',
-      linkUrl: 'https://hridoysoft.com/projects/billedsmart',
+          'https://res.cloudinary.com/dn2lldb4m/image/upload/v1773484189/appstore_z7dbc4.png',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.billsmart.app&pcampaignid=web_share',
       accent: AppColors.primary,
     ),
     ProjectItem(
-      title: 'DeepQuran',
-      subtitle: 'Quran learning app',
-      techStack: ['Flutter', 'GetX', 'AI'],
+      title: 'Deep Quran',
+      subtitle: 'Quran learning and practice app',
+      techStack: ['Flutter', 'REST API', 'Content Delivery', 'Localization'],
+      tag: 'Quran',
+      imageUrl:
+          'https://res.cloudinary.com/dn2lldb4m/image/upload/v1773484410/app_icon_t354ui.png',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.deepquran.app&pcampaignid=web_share',
+      accent: AppColors.primaryHover,
+    ),
+    ProjectItem(
+      title: 'Reparo',
+      subtitle: 'On-demand repair service platform',
+      techStack: ['Flutter', 'REST API', 'Booking Flow', 'Service Management'],
+      tag: 'Service',
+      imageUrl:
+          'https://res.cloudinary.com/dn2lldb4m/image/upload/v1773484368/app_logo_j9moac.png',
+      playStoreUrl:
+          'https://play.google.com/store/apps/details?id=com.gentleman.app&pcampaignid=web_share',
+      appStoreUrl: 'https://apps.apple.com/us/app/reparo/id6756050921',
+      accent: AppColors.borderDark,
+    ),
+    ProjectItem(
+      title: 'Dragon Math',
+      subtitle: 'Interactive math learning app',
+      techStack: ['Flutter', 'REST API', 'Interactive UI', 'Progress Flow'],
       tag: 'Education',
       imageUrl:
-          'https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=600&q=80',
-      linkUrl: 'https://hridoysoft.com/projects/deepquran',
-      accent: AppColors.primaryHover,
-    ),
-    ProjectItem(
-      title: 'Hamdann Ecommerce',
-      subtitle: 'E-commerce experience',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
-      tag: 'Marketplace',
-      imageUrl:
-          'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
-      linkUrl: 'https://hridoysoft.com/projects/hamdann-ecommerce',
-      accent: AppColors.borderDark,
-    ),
-    ProjectItem(
-      title: 'Heartbeat Measure',
-      subtitle: 'Student wellness',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
-      tag: 'Health',
-      imageUrl:
           'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80',
-      linkUrl: 'https://hridoysoft.com/projects/heartbeat-measure',
+      appStoreUrl: 'https://apps.apple.com/us/app/dragon-ma%CE%B8/id6759892711',
       accent: AppColors.primary,
     ),
     ProjectItem(
-      title: 'Docmnk',
-      subtitle: 'Hospital management',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
-      tag: 'Hospital',
-      imageUrl:
-          'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80',
-      linkUrl: 'https://hridoysoft.com/projects/docmnk',
-      accent: AppColors.primaryHover,
-    ),
-    ProjectItem(
-      title: 'Doctor AI',
-      subtitle: 'AI doctor training',
-      techStack: ['Flutter', 'GetX', 'AI'],
-      tag: 'AI',
-      imageUrl:
-          'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80',
-      linkUrl: 'https://hridoysoft.com/projects/doctor-ai',
-      accent: AppColors.borderDark,
-    ),
-    ProjectItem(
-      title: 'Prajanti Ecommerce',
-      subtitle: 'B2B commerce',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      title: 'Humdam Flutter',
+      subtitle: 'Mobile e-commerce experience',
+      techStack: ['Flutter', 'REST API', 'Cart & Checkout', 'Product UI'],
       tag: 'Commerce',
       imageUrl:
-          'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80',
-      linkUrl: 'https://hridoysoft.com/projects/prajanti-ecommerce',
-      accent: AppColors.primary,
+          'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
+      accent: AppColors.primaryHover,
+    ),
+    ProjectItem(
+      title: 'Pet Team',
+      subtitle: 'Pet care service platform',
+      techStack: ['Flutter', 'REST API', 'Marketplace Flow', 'Booking'],
+      tag: 'Pets',
+      imageUrl:
+          'https://res.cloudinary.com/dn2lldb4m/image/upload/v1773484311/logo_bulabs.png',
+      accent: AppColors.borderDark,
     ),
     ProjectItem(
       title: 'School Point',
-      subtitle: 'Event rewards',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'School event reward system',
+      techStack: ['Flutter', 'GetX', 'REST API', 'Reward Logic'],
       tag: 'Education',
       imageUrl:
           'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=600&q=80',
       linkUrl: 'https://hridoysoft.com/projects/school-point',
-      accent: AppColors.primaryHover,
+      accent: AppColors.primary,
     ),
     ProjectItem(
       title: 'Infix',
-      subtitle: 'Learning management system',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'Learning management system app',
+      techStack: ['Flutter', 'GetX', 'REST API', 'LMS Workflows'],
       tag: 'LMS',
       imageUrl:
           'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80',
@@ -102,8 +94,8 @@ class ProjectsSection extends StatelessWidget {
     ),
     ProjectItem(
       title: 'Call YOU',
-      subtitle: 'Video calling',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'Video calling application',
+      techStack: ['Flutter', 'GetX', 'REST API', 'Calling Flow'],
       tag: 'Video',
       imageUrl:
           'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80',
@@ -112,8 +104,8 @@ class ProjectsSection extends StatelessWidget {
     ),
     ProjectItem(
       title: 'Kunduli Match',
-      subtitle: 'Dating app',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'Social matching application',
+      techStack: ['Flutter', 'GetX', 'REST API', 'Profile Matching'],
       tag: 'Social',
       imageUrl:
           'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
@@ -122,8 +114,8 @@ class ProjectsSection extends StatelessWidget {
     ),
     ProjectItem(
       title: 'Yopo',
-      subtitle: 'Tenant app',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'Tenant management app',
+      techStack: ['Flutter', 'GetX', 'REST API', 'Property Workflows'],
       tag: 'Property',
       imageUrl:
           'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=600&q=80',
@@ -132,8 +124,8 @@ class ProjectsSection extends StatelessWidget {
     ),
     ProjectItem(
       title: 'Task Management',
-      subtitle: 'Team workflow',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'Team workflow and tracking app',
+      techStack: ['Flutter', 'GetX', 'REST API', 'Productivity'],
       tag: 'Productivity',
       imageUrl:
           'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80',
@@ -142,8 +134,8 @@ class ProjectsSection extends StatelessWidget {
     ),
     ProjectItem(
       title: 'Romain Institute School Bill',
-      subtitle: 'School billing',
-      techStack: ['Flutter', 'GetX', 'RESTful API'],
+      subtitle: 'School billing management app',
+      techStack: ['Flutter', 'GetX', 'REST API', 'Billing Workflow'],
       tag: 'Education',
       imageUrl:
           'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=600&q=80',
@@ -169,14 +161,14 @@ class ProjectsSection extends StatelessWidget {
                 ? 280.0
                 : 300.0;
             final cardHeight = sizingInfo.isMobile
-                ? 300.0
+                ? 320.0
                 : sizingInfo.isTablet
-                ? 300.0
-                : 300.0;
+                ? 320.0
+                : 320.0;
 
-            final half = (_projects.length / 2).ceil();
-            final firstRow = _projects.sublist(0, half);
-            final secondRow = _projects.sublist(half);
+            const firstRowCount = 6;
+            final firstRow = _projects.take(firstRowCount).toList();
+            final secondRow = _projects.skip(firstRowCount).toList();
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,16 +218,20 @@ class ProjectItem {
     required this.title,
     required this.subtitle,
     required this.techStack,
-    required this.linkUrl,
     required this.imageUrl,
     required this.tag,
     required this.accent,
+    this.linkUrl,
+    this.playStoreUrl,
+    this.appStoreUrl,
   });
 
   final String title;
   final String subtitle;
   final List<String> techStack;
-  final String linkUrl;
+  final String? linkUrl;
+  final String? playStoreUrl;
+  final String? appStoreUrl;
   final String imageUrl;
   final String tag;
   final Color accent;
@@ -269,6 +265,7 @@ class _AutoScrollRowState extends State<AutoScrollRow>
   late final Ticker _ticker;
   Duration? _lastTick;
   double _loopExtent = 0;
+  bool _isPaused = false;
 
   @override
   void initState() {
@@ -297,6 +294,10 @@ class _AutoScrollRowState extends State<AutoScrollRow>
 
   void _onTick(Duration elapsed) {
     if (!mounted || !_controller.hasClients) return;
+    if (_isPaused) {
+      _lastTick = elapsed;
+      return;
+    }
     if (_loopExtent == 0) {
       _updateLoopExtent();
       return;
@@ -333,23 +334,34 @@ class _AutoScrollRowState extends State<AutoScrollRow>
   @override
   Widget build(BuildContext context) {
     final items = [...widget.items, ...widget.items];
-    return SizedBox(
-      height: widget.cardHeight,
-      child: ListView.builder(
-        controller: _controller,
-        scrollDirection: Axis.horizontal,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(right: index == items.length - 1 ? 0 : 20),
-            child: SizedBox(
-              width: widget.cardWidth,
-              height: widget.cardHeight,
-              child: ProjectCard(project: items[index]),
-            ),
-          );
-        },
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isPaused = true),
+      onExit: (_) => setState(() => _isPaused = false),
+      child: Listener(
+        onPointerDown: (_) => setState(() => _isPaused = true),
+        onPointerUp: (_) => setState(() => _isPaused = false),
+        onPointerCancel: (_) => setState(() => _isPaused = false),
+        child: SizedBox(
+          height: widget.cardHeight,
+          child: ListView.builder(
+            controller: _controller,
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  right: index == items.length - 1 ? 0 : 20,
+                ),
+                child: SizedBox(
+                  width: widget.cardWidth,
+                  height: widget.cardHeight,
+                  child: ProjectCard(project: items[index]),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -359,6 +371,34 @@ class ProjectCard extends StatelessWidget {
   const ProjectCard({super.key, required this.project});
 
   final ProjectItem project;
+
+  List<_ProjectAction> get _actions {
+    final actions = <_ProjectAction>[];
+    if (project.playStoreUrl != null) {
+      actions.add(
+        _ProjectAction(label: 'Play Store', url: project.playStoreUrl!),
+      );
+    }
+    if (project.appStoreUrl != null) {
+      actions.add(
+        _ProjectAction(label: 'App Store', url: project.appStoreUrl!),
+      );
+    }
+    if (project.linkUrl != null) {
+      actions.add(_ProjectAction(label: 'View Project', url: project.linkUrl!));
+    }
+    return actions;
+  }
+
+  String? get _availabilityNote {
+    if (project.playStoreUrl != null && project.appStoreUrl == null) {
+      return 'App Store: N/A';
+    }
+    if (project.appStoreUrl != null && project.playStoreUrl == null) {
+      return 'Play Store: N/A';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -438,41 +478,126 @@ class ProjectCard extends StatelessWidget {
                       )
                       .toList(),
                 ),
-                const SizedBox(height: 20),
-                Link(
-                  uri: Uri.parse(project.linkUrl),
-                  builder: (context, followLink) {
-                    return Container(
-                      width: double.infinity,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: project.accent,
-                        borderRadius: BorderRadius.circular(8),
+                const Spacer(),
+                if (_actions.isEmpty)
+                  Container(
+                    width: double.infinity,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: AppColors.chipLight,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.borderLight),
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Private Project',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textMuted,
                       ),
-                      alignment: Alignment.center,
-                      child: InkWell(
-                        onTap: followLink,
-                        borderRadius: BorderRadius.circular(8),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Text(
-                            'Visit ${project.title}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                    ),
+                  )
+                else
+                  _ProjectActions(actions: _actions, accent: project.accent),
+                if (_availabilityNote != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    _availabilityNote!,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textMuted,
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _ProjectAction {
+  const _ProjectAction({required this.label, required this.url});
+
+  final String label;
+  final String url;
+}
+
+class _ProjectActions extends StatelessWidget {
+  const _ProjectActions({required this.actions, required this.accent});
+
+  final List<_ProjectAction> actions;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    if (actions.length == 1) {
+      return SizedBox(
+        width: double.infinity,
+        child: _ProjectActionButton(action: actions.first, accent: accent),
+      );
+    }
+
+    if (actions.length == 2) {
+      return Row(
+        children: [
+          Expanded(
+            child: _ProjectActionButton(action: actions[0], accent: accent),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: _ProjectActionButton(action: actions[1], accent: accent),
+          ),
+        ],
+      );
+    }
+
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: actions
+          .map((action) => _ProjectActionButton(action: action, accent: accent))
+          .toList(),
+    );
+  }
+}
+
+class _ProjectActionButton extends StatelessWidget {
+  const _ProjectActionButton({required this.action, required this.accent});
+
+  final _ProjectAction action;
+  final Color accent;
+
+  Future<void> _openLink() async {
+    final uri = Uri.parse(action.url);
+    await launchUrl(uri, webOnlyWindowName: '_blank');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: _openLink,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        height: 34,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: accent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          action.label,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -485,17 +610,33 @@ class _ProjectPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height: 110,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(
-          image: NetworkImage(project.imageUrl),
-          fit: BoxFit.cover,
-        ),
         border: Border.all(color: AppColors.borderLight),
       ),
       child: Stack(
         children: [
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.network(
+                project.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: AppColors.chipLight,
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.apps_rounded,
+                      size: 32,
+                      color: project.accent,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
