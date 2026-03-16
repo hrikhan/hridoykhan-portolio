@@ -10,27 +10,27 @@ class StatsSection extends StatelessWidget {
   static const List<_StatItemData> _stats = [
     _StatItemData(
       icon: Icons.schedule,
-      value: 4,
+      value: 2,
       suffix: '+',
       label: 'Years Experience',
     ),
     _StatItemData(
       icon: Icons.rocket_launch,
-      value: 14,
-      suffix: '+',
-      label: 'Projects Shipped',
-    ),
-    _StatItemData(
-      icon: Icons.groups,
       value: 10,
       suffix: '+',
-      label: 'Happy Clients',
+      label: 'Apps Delivered',
     ),
     _StatItemData(
-      icon: Icons.code,
-      value: 100000,
-      suffix: '+',
-      label: 'Lines of Code',
+      icon: Icons.account_tree_outlined,
+      value: 3,
+      suffix: '',
+      label: 'State Patterns',
+    ),
+    _StatItemData(
+      icon: Icons.storefront_outlined,
+      value: 2,
+      suffix: '',
+      label: 'Store Platforms',
     ),
   ];
 
@@ -206,42 +206,51 @@ class _StatsVideoCardState extends State<_StatsVideoCard> {
   static const String _videoUrl =
       'https://res.cloudinary.com/dofsibxao/video/upload/v1767176267/E-commerce_bU_and_asales_ef1gpz.mp4';
 
-  late final VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   bool _isReady = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(_videoUrl))
-      ..setLooping(true)
-      ..setVolume(0);
-    _controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _isReady = true;
-      });
-      _controller.play();
-    });
+    try {
+      final controller = VideoPlayerController.networkUrl(Uri.parse(_videoUrl))
+        ..setLooping(true)
+        ..setVolume(0);
+      _controller = controller;
+      controller
+          .initialize()
+          .then((_) {
+            if (!mounted) {
+              return;
+            }
+            setState(() {
+              _isReady = true;
+            });
+            controller.play();
+          })
+          .catchError((_) {});
+    } catch (_) {
+      _controller = null;
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Widget content = _isReady
+    final controller = _controller;
+    final Widget content = _isReady && controller != null
         ? SizedBox.expand(
             child: FittedBox(
               fit: BoxFit.cover,
               child: SizedBox(
-                width: _controller.value.size.width,
-                height: _controller.value.size.height,
-                child: VideoPlayer(_controller),
+                width: controller.value.size.width,
+                height: controller.value.size.height,
+                child: VideoPlayer(controller),
               ),
             ),
           )
