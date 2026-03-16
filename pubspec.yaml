@@ -68,6 +68,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - .env
+    - web/icons/Icon-maskable-512.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

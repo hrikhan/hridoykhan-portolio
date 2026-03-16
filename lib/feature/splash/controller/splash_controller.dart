@@ -38,7 +38,7 @@ class SplashScreenController extends GetxController
     Get.offAll(
       () => HomePage(),
       transition: Transition.fadeIn,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 180),
     );
   }
 

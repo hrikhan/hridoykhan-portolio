@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../../core/utils/download_resume.dart';
 import '../../../core/widgets/hover.dart';
 import '../../../core/widgets/responsive_builder.dart';
 import '../controller/home_controller.dart';
@@ -31,6 +32,12 @@ class HeroSection extends StatelessWidget {
           isMobile: isMobile,
           onPrimaryTap: () =>
               controller.scrollToSection(controller.projectsKey, offset: 72),
+          onResumeTap: () {
+            downloadResume(
+              'resume/hridoy-khan-cv.pdf',
+              fileName: 'Hridoy-Khan-CV.pdf',
+            );
+          },
         );
 
         final visual = _HeroVisual(
@@ -69,11 +76,13 @@ class _HeroContent extends StatelessWidget {
     required this.titleSize,
     required this.isMobile,
     required this.onPrimaryTap,
+    required this.onResumeTap,
   });
 
   final double titleSize;
   final bool isMobile;
   final VoidCallback onPrimaryTap;
+  final VoidCallback onResumeTap;
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +110,12 @@ class _HeroContent extends StatelessWidget {
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 540),
           child: Text(
-            'I build clean, fast Flutter apps for Android, iOS, web, and desktop. '
-            'From UI polish and state management to REST/GraphQL APIs, I focus on '
-            'performance, scalability, and smooth user experiences. '
-            'I also add AI features when needed to make products smarter and more useful.',
+            'I design and ship Flutter applications that combine polished UI, '
+            'maintainable architecture, and dependable integrations. My work '
+            'covers Android, iOS, and web experiences with hands-on delivery in '
+            'state management, REST APIs, local storage, Firebase services, and '
+            'AI-assisted product features. I focus on building software that is '
+            'fast, scalable, and genuinely useful for real users.',
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: isMobile ? 16 : 18,
@@ -130,9 +141,10 @@ class _HeroContent extends StatelessWidget {
               label: 'View My Work',
               onTap: onPrimaryTap,
             ),
-            const _OutlineButton(
+            _OutlineButton(
               icon: Icons.download,
               label: 'Download Resume',
+              onTap: onResumeTap,
             ),
           ],
         ),
@@ -206,46 +218,52 @@ class _PrimaryButton extends StatelessWidget {
 }
 
 class _OutlineButton extends StatelessWidget {
-  const _OutlineButton({required this.icon, required this.label});
+  const _OutlineButton({required this.icon, required this.label, this.onTap});
 
   final IconData icon;
   final String label;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return HoverRegion(
       builder: (context, isHovered) {
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeOut,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              width: 2,
-              color: isHovered ? AppColors.primary : AppColors.borderLight,
+        return GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOut,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                width: 2,
+                color: isHovered ? AppColors.primary : AppColors.borderLight,
+              ),
             ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                icon,
-                size: 20,
-                color: isHovered ? AppColors.primary : AppColors.textPrimary,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  size: 20,
                   color: isHovered ? AppColors.primary : AppColors.textPrimary,
-                  letterSpacing: 0.2,
                 ),
-              ),
-            ],
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: isHovered
+                        ? AppColors.primary
+                        : AppColors.textPrimary,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -268,21 +286,21 @@ class _AnimatedTitleState extends State<_AnimatedTitle> {
 
   late final List<_AnimatedTitleItem> _items = [
     _AnimatedTitleItem(
-      key: 'flutter_developer',
+      key: 'flutter_engineer',
       spans: const [
         TextSpan(
-          text: 'Junior ',
+          text: 'Flutter ',
           style: TextStyle(color: AppColors.backgroundDark),
         ),
         TextSpan(
-          text: 'Flutter',
+          text: 'Engineer',
           style: TextStyle(color: AppColors.primary),
         ),
-        TextSpan(text: ' Developer'),
+        TextSpan(text: ' for real products'),
       ],
     ),
     _AnimatedTitleItem(
-      key: 'android_ios',
+      key: 'multi_platform',
       spans: const [
         TextSpan(text: 'Building '),
         TextSpan(
@@ -294,33 +312,33 @@ class _AnimatedTitleState extends State<_AnimatedTitle> {
           text: 'iOS',
           style: TextStyle(color: AppColors.primary),
         ),
-        TextSpan(text: ' apps'),
+        TextSpan(text: ' experiences'),
       ],
     ),
     _AnimatedTitleItem(
-      key: 'api',
+      key: 'api_driven_apps',
       spans: const [
-        TextSpan(text: 'Connect '),
+        TextSpan(text: 'Creating '),
         TextSpan(
-          text: 'Flutter',
+          text: 'API-driven',
           style: TextStyle(color: AppColors.primary),
         ),
-        TextSpan(text: ' app with any '),
+        TextSpan(text: ' business '),
         TextSpan(
-          text: 'API',
+          text: 'apps',
           style: TextStyle(color: AppColors.primary),
         ),
       ],
     ),
     _AnimatedTitleItem(
-      key: 'ai',
+      key: 'ai_features',
       spans: const [
-        TextSpan(text: 'Implement '),
+        TextSpan(text: 'Adding '),
         TextSpan(
-          text: 'AI',
+          text: 'AI-assisted',
           style: TextStyle(color: AppColors.primary),
         ),
-        TextSpan(text: ' in app'),
+        TextSpan(text: ' product features'),
       ],
     ),
   ];
