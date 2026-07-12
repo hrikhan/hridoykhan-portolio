@@ -32,14 +32,16 @@ class HomePage extends StatelessWidget {
       backgroundColor: AppColors.backgroundLight,
       body: Stack(
         children: [
-          const Positioned.fill(child: _HomeBackground()),
           ResponsiveBuilder(
             builder: (context, sizingInfo) {
               return SingleChildScrollView(
                 controller: controller.scrollController,
                 child: Column(
                   children: [
-                    const SizedBox(height: Navbar.height),
+                    SectionAnchor(
+                      anchorKey: controller.homeKey,
+                      child: const ScrollReveal(child: HeroSection()),
+                    ),
                     Padding(
                       padding: Breakpoints.pagePadding(sizingInfo.deviceType),
                       child: Center(
@@ -48,10 +50,6 @@ class HomePage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SectionAnchor(
-                                anchorKey: controller.homeKey,
-                                child: const ScrollReveal(child: HeroSection()),
-                              ),
                               const SizedBox(height: 24),
                               SectionAnchor(
                                 anchorKey: controller.statsKey,
@@ -127,147 +125,5 @@ class SectionAnchor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return child;
-  }
-}
-
-class _HomeBackground extends StatelessWidget {
-  const _HomeBackground();
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final size = constraints.biggest;
-          final width = size.width;
-          final height = size.height;
-
-          return Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.backgroundLight,
-                      AppColors.backgroundLight.withValues(alpha: 0.96),
-                      const Color(0xFFFFFBF5),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: -width * 0.12,
-                top: height * 0.06,
-                child: const _BackgroundShape(
-                  width: 260,
-                  height: 260,
-                  opacity: 0.12,
-                  borderRadius: 80,
-                  angle: -0.22,
-                  colors: [AppColors.primary, Color(0xFFFFB14D)],
-                ),
-              ),
-              Positioned(
-                right: -width * 0.08,
-                top: height * 0.2,
-                child: const _BackgroundShape(
-                  width: 320,
-                  height: 180,
-                  opacity: 0.1,
-                  borderRadius: 40,
-                  angle: 0.34,
-                  colors: [Color(0xFFFFA726), AppColors.primaryHover],
-                ),
-              ),
-              Positioned(
-                left: width * 0.12,
-                top: height * 0.48,
-                child: const _BackgroundShape(
-                  width: 160,
-                  height: 160,
-                  opacity: 0.08,
-                  borderRadius: 999,
-                  angle: 0,
-                  colors: [AppColors.primary, Color(0xFFFFC36B)],
-                ),
-              ),
-              Positioned(
-                right: width * 0.1,
-                bottom: height * 0.16,
-                child: const _BackgroundShape(
-                  width: 280,
-                  height: 140,
-                  opacity: 0.08,
-                  borderRadius: 999,
-                  angle: -0.28,
-                  colors: [AppColors.primaryHover, AppColors.primary],
-                ),
-              ),
-              Positioned(
-                left: width * 0.38,
-                bottom: -20,
-                child: const _BackgroundShape(
-                  width: 180,
-                  height: 180,
-                  opacity: 0.06,
-                  borderRadius: 48,
-                  angle: 0.52,
-                  colors: [Color(0xFFFF9F1C), Color(0xFFFFC46B)],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _BackgroundShape extends StatelessWidget {
-  const _BackgroundShape({
-    required this.width,
-    required this.height,
-    required this.opacity,
-    required this.borderRadius,
-    required this.angle,
-    required this.colors,
-  });
-
-  final double width;
-  final double height;
-  final double opacity;
-  final double borderRadius;
-  final double angle;
-  final List<Color> colors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Transform.rotate(
-      angle: angle,
-      child: Opacity(
-        opacity: opacity,
-        child: Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: colors,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: colors.first.withValues(alpha: 0.16),
-                blurRadius: 48,
-                offset: const Offset(0, 18),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
