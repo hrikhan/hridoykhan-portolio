@@ -1,8 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+import '../../../core/widgets/smooth_scroll_controller.dart';
+
 class HomeController extends GetxController {
-  final ScrollController scrollController = ScrollController();
+  final ScrollController scrollController = SmoothScrollController();
 
   final GlobalKey homeKey = GlobalKey();
   final GlobalKey projectsKey = GlobalKey();
