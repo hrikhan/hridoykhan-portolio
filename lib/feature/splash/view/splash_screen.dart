@@ -16,23 +16,10 @@ class SplashScreen extends StatelessWidget {
     }
     final textTheme = Theme.of(context).textTheme;
     final controller = Get.find<SplashScreenController>();
-    final isDark = Theme.of(context).colorScheme.brightness == Brightness.dark;
-    final bgGradient = LinearGradient(
-      colors: [
-        AppColors.backgroundLight,
-        isDark
-            ? AppColors.backgroundLight.withOpacity(0.9)
-            : AppColors.borderLight,
-      ],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    );
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      body: Container(
-        decoration: BoxDecoration(gradient: bgGradient),
-        child: SafeArea(
-          child: ResponsiveBuilder(
+      body: SafeArea(
+        child: ResponsiveBuilder(
             builder: (context, sizingInfo) {
               final isMobile = sizingInfo.deviceType == DeviceType.mobile;
               final titleStyle =
@@ -91,7 +78,7 @@ class SplashScreen extends StatelessWidget {
                               minHeight: 6,
                               value: progressValue / 100,
                               backgroundColor: AppColors.borderLight
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               valueColor: const AlwaysStoppedAnimation(
                                 AppColors.primary,
                               ),
@@ -106,7 +93,6 @@ class SplashScreen extends StatelessWidget {
             },
           ),
         ),
-      ),
     );
   }
 }

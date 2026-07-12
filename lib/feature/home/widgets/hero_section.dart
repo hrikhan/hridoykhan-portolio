@@ -3,12 +3,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../../core/utils/breakpoints.dart';
 import '../../../core/utils/download_resume.dart';
 import '../../../core/widgets/hover.dart';
 import '../../../core/widgets/responsive_builder.dart';
 import '../controller/home_controller.dart';
+import 'navbar.dart';
 import 'tech_stack_chips.dart';
 
 class HeroSection extends StatelessWidget {
@@ -21,11 +25,7 @@ class HeroSection extends StatelessWidget {
       builder: (context, sizingInfo) {
         final isMobile = sizingInfo.isMobile;
         final isTablet = sizingInfo.isTablet;
-        final titleSize = isMobile
-            ? 36.0
-            : isTablet
-            ? 48.0
-            : 60.0;
+        final titleSize = isMobile ? 32.0 : isTablet ? 42.0 : 54.0;
 
         final content = _HeroContent(
           titleSize: titleSize,
@@ -48,23 +48,55 @@ class HeroSection extends StatelessWidget {
           isMobile: isMobile,
         );
 
-        return Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: sizingInfo.isDesktop ? 80 : 48,
-          ),
-          child: sizingInfo.isDesktop
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(child: content),
-                    const SizedBox(width: 80),
-                    Expanded(child: visual),
-                  ],
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [visual, const SizedBox(height: 32), content],
+        return Stack(
+          children: [
+            const Positioned.fill(
+              child: _HeroVideoPlayer(),
+            ),
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.white.withValues(alpha: 0.65),
+                      Colors.white.withValues(alpha: 0.75),
+                      AppColors.backgroundLight.withValues(alpha: 0.80),
+                    ],
+                  ),
                 ),
+              ),
+            ),
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1400),
+                child: Padding(
+                  padding: Breakpoints.pagePadding(sizingInfo.deviceType).copyWith(
+                    top: sizingInfo.isDesktop ? (Navbar.height + 80) : (Navbar.height + 48),
+                    bottom: sizingInfo.isDesktop ? 80 : 48,
+                  ),
+                  child: sizingInfo.isDesktop
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(child: content),
+                            const SizedBox(width: 80),
+                            visual,
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            visual,
+                            const SizedBox(height: 32),
+                            content,
+                          ],
+                        ),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -89,45 +121,41 @@ class _HeroContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Container(width: 32, height: 2, color: AppColors.primary),
-            const SizedBox(width: 8),
-            const Text(
-              "HELLO, I'M HRIDOY",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 2.4,
-                color: AppColors.primary,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
         _AnimatedTitle(titleSize: titleSize),
         const SizedBox(height: 16),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 540),
-          child: Text(
-            'I design and ship Flutter applications that combine polished UI, '
-            'maintainable architecture, and dependable integrations. My work '
-            'covers Android, iOS, and web experiences with hands-on delivery in '
-            'state management, REST APIs, local storage, Firebase services, and '
-            'AI-assisted product features. I focus on building software that is '
-            'fast, scalable, and genuinely useful for real users.',
-            textAlign: TextAlign.justify,
-            style: TextStyle(
-              fontSize: isMobile ? 16 : 18,
-              height: 1.6,
-              color: AppColors.textMuted,
-              shadows: [
-                Shadow(
-                  color: Colors.black.withOpacity(0.08),
-                  offset: const Offset(0, 1),
-                  blurRadius: 2,
-                ),
+          child: ShaderMask(
+            shaderCallback: (bounds) => const LinearGradient(
+              colors: [
+                AppColors.textPrimary,
+                Color(0xFF5A6B7C),
               ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ).createShader(bounds),
+            child: Text(
+              'I design and ship Flutter applications that combine polished UI, '
+              'maintainable architecture, and dependable integrations. My work '
+              'covers Android, iOS, and web experiences with hands-on delivery in '
+              'state management, REST APIs, local storage, Firebase services, and '
+              'AI-assisted product features. I focus on building software that is '
+              'fast, scalable, and genuinely useful for real users.',
+              textAlign: TextAlign.justify,
+              style: GoogleFonts.raleway(
+                fontSize: isMobile ? 14 : 16,
+                height: 1.7,
+                fontWeight: FontWeight.w300,
+                fontStyle: FontStyle.italic,
+                color: Colors.white, // Colors.white is required for ShaderMask to apply the gradient properly
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.02),
+                    offset: const Offset(0, 1),
+                    blurRadius: 2,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -346,12 +374,11 @@ class _AnimatedTitleState extends State<_AnimatedTitle> {
   int _currentIndex = 0;
   Timer? _timer;
 
-  TextStyle get _baseStyle => TextStyle(
-    fontFamily: 'Inter',
+  TextStyle get _baseStyle => GoogleFonts.raleway(
     fontSize: widget.titleSize,
-    fontWeight: FontWeight.w900,
-    height: 1.1,
-    letterSpacing: -0.6,
+    fontWeight: FontWeight.w800,
+    height: 1.15,
+    letterSpacing: -0.8,
     color: AppColors.textPrimary,
   );
 
@@ -464,24 +491,25 @@ class _HeroVisual extends StatelessWidget {
                   Positioned.fill(
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: Colors.white, width: 4),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: Colors.white, width: 1.5),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.12),
-                            blurRadius: 32,
-                            offset: const Offset(0, 20),
+                            color: Colors.black.withValues(alpha: 0.08),
+                            blurRadius: 16,
+                            offset: const Offset(0, 8),
                           ),
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(4),
                         child: Stack(
                           children: [
                             Positioned.fill(
                               child: Image.network(
                                 'https://res.cloudinary.com/dofsibxao/image/upload/v1766552671/2025-12-24_10.59.56_jksifr.jpg',
                                 fit: BoxFit.cover,
+                                alignment: const Alignment(0, -0.22),
                                 filterQuality: FilterQuality.medium,
                               ),
                             ),
@@ -489,8 +517,6 @@ class _HeroVisual extends StatelessWidget {
                               Positioned(
                                 top: 10,
                                 right: 24,
-
-                                // bottom: 24,
                                 child: _CodeOverlay(
                                   backgroundOpacity: isMobile ? 0.7 : 0.9,
                                 ),
@@ -506,6 +532,91 @@ class _HeroVisual extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class _HeroVideoPlayer extends StatefulWidget {
+  const _HeroVideoPlayer();
+
+  @override
+  State<_HeroVideoPlayer> createState() => _HeroVideoPlayerState();
+}
+
+class _HeroVideoPlayerState extends State<_HeroVideoPlayer> {
+  late VideoPlayerController _controller;
+  bool _initialized = false;
+  bool _error = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/images/286278_small.mp4');
+    _controller.initialize().then((_) {
+      if (mounted) {
+        setState(() {
+          _initialized = true;
+        });
+        _controller.setLooping(true);
+        _controller.setVolume(0.0); // Mute is required for web autoplay
+        _controller.play();
+      }
+    }).catchError((e) {
+      debugPrint('Video player initialization error: $e');
+      if (mounted) {
+        setState(() {
+          _error = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_error) {
+      return const _FallbackImage();
+    }
+
+    if (!_initialized) {
+      return Container(
+        color: AppColors.backgroundLight,
+        child: const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+          ),
+        ),
+      );
+    }
+
+    return SizedBox.expand(
+      child: FittedBox(
+        fit: BoxFit.cover,
+        clipBehavior: Clip.hardEdge,
+        child: SizedBox(
+          width: _controller.value.size.width,
+          height: _controller.value.size.height,
+          child: VideoPlayer(_controller),
+        ),
+      ),
+    );
+  }
+}
+
+class _FallbackImage extends StatelessWidget {
+  const _FallbackImage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      'https://res.cloudinary.com/dofsibxao/image/upload/v1766552671/2025-12-24_10.59.56_jksifr.jpg',
+      fit: BoxFit.cover,
+      filterQuality: FilterQuality.medium,
     );
   }
 }
@@ -528,7 +639,7 @@ class _HeroGlow extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.primary.withOpacity(0.2),
+                  AppColors.primary.withValues(alpha: 0.08),
                   Colors.transparent,
                 ],
               ),
